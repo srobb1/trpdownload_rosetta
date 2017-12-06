@@ -1,0 +1,6 @@
+name = Tripal Download Rosetta Stone  
+description = Uses the Tripal Download API to download a feature's Rosetta Stone translation results. Works with View: Rosetta Stone
+core = 7.x
+package = Tripal Extensions
+dependencies[] = tripal_core
+dependencies[] = trpdownload_api
