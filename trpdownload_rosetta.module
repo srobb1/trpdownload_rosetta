@@ -67,13 +67,16 @@ function trpdownload_rosetta_csv_generate_file($variables, $job_id = NULL) {
     'Transcript Name',
     'DB',
     'Other Transcript ID'
-  ));
+  ))  ;
 
+  $SIMRbase_uniquename = '';
+  $other_uniquename = '';
+  $other_db_name = '';
   $other_db_name = $variables["q"]["other_db_name"];
-  $SIMRbase_uniquename = $variables["q"]["SIMRbase_uniquename"];
+  if(array_key_exists("SIMRbase_uniquename",$variables["q"])){
+    $SIMRbase_uniquename = $variables["q"]["SIMRbase_uniquename"];
+  }
   $other_uniquename = $variables["q"]["other_uniquename"];
-
-print(SIMRbase_uniquename);
 
   $where_db = '';
   $where_other_id = '';
@@ -90,7 +93,6 @@ print(SIMRbase_uniquename);
   if (!empty($other_uniquename)){
    $in_array = preg_split('/[\s,]+/',$other_uniquename);
    $in_string = "'" . join("','",$in_array) . "'";
-   
    $where_other_id = "other_uniquename in ($in_string)";
   }
 
