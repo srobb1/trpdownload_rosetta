@@ -84,7 +84,8 @@ function trpdownload_rosetta_csv_generate_file($variables, $job_id = NULL) {
   $q_args = array();
 
   if (!empty($other_db_name) and $other_db_name != 'All'){
-   $in_array = preg_split('/[\s,]+/',$other_db_name);
+   //$in_array = preg_split('/[\s,]+/',$other_db_name);
+   $in_array = preg_split('/,/',$other_db_name);
    $in_string = "'" . join("','",$in_array) . "'";
 
    $where_db = "other_db_name in ($in_string)";
@@ -121,7 +122,9 @@ function trpdownload_rosetta_csv_generate_file($variables, $job_id = NULL) {
      $query = "$query AND $where_simrbase_id ";
   }
    $rosettaStones = chado_query($query,$q_args);
-
+drupal_set_message($query,'warning');
+drush_print($query);
+dpm($query);
 
   // for tracking progress.
   $count_query = preg_replace('/SELECT.*FROM/s', 'SELECT count(*) as num_lines FROM', $query);
