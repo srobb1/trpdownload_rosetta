@@ -93,15 +93,15 @@ function trpdownload_rosetta_csv_generate_file($variables, $job_id = NULL) {
 
   if (!empty($other_uniquename)){
    $in_array = preg_split('/[\s,]+/',$other_uniquename);
-   $in_string = "'" . join("','",$in_array) . "'";
-   $where_other_id = "other_uniquename in ($in_string)";
+   $in_string = join("|",$in_array) ;
+   $where_other_id = "other_uniquename similar to '%($in_string)%'";
   }
 
   if (!empty($SIMRbase_uniquename)){
    $in_array = preg_split('/[\s,]+/',$SIMRbase_uniquename);
-   $in_string = "'" . join("','",$in_array) . "'";
+   $in_string = join("|",$in_array) ;
 
-   $where_simrbase_id = "SIMRbase_uniquename in ($in_string)";
+   $where_simrbase_id = "SIMRbase_uniquename similar to '%($in_string)%'";
   }
 
 
@@ -122,6 +122,7 @@ function trpdownload_rosetta_csv_generate_file($variables, $job_id = NULL) {
      $query = "$query AND $where_simrbase_id ";
   }
    $rosettaStones = chado_query($query,$q_args);
+drush_print($query);
 
   // for tracking progress.
   $count_query = preg_replace('/SELECT.*FROM/s', 'SELECT count(*) as num_lines FROM', $query);
